@@ -7,7 +7,7 @@
 
 ---
 ## Article
-https://medium.com/p/b4b3b9199202/edit
+[https://medium.com/p/b4b3b9199202/edit](https://medium.com/datadriveninvestor/panic-in-two-directions-why-the-bond-market-cant-decide-if-we-re-heading-for-inflation-hell-or-a-b4b3b9199202)
 
 ## Context
 
