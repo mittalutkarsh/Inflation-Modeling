@@ -92,7 +92,7 @@ Update the **yellow cells** with the latest values after refreshing data.
 Breaks the 10Y nominal Treasury yield into its three core components:
 
 ```text
-10Y Nominal Yield = Real Yield (TIPS) + Breakeven Inflation + Term Premium '''
+10Y Nominal Yield = Real Yield (TIPS) + Breakeven Inflation + Term Premium ```
 
 
 
