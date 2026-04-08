@@ -1,113 +1,121 @@
-# Bond Market Stagflation Scenario Model
+Bond Market Stagflation Scenario Model
+A live Excel workbook for monitoring, decomposing, and simulating the inflation-vs-recession tug of war in global bond markets during the 2026 Iran war / Strait of Hormuz crisis.
 
-> A live Excel workbook for monitoring, decomposing, and simulating the inflation-vs-recession tug of war in global bond markets during the 2026 Iran war / Strait of Hormuz crisis.
+📊 .xlsx
+📡 FRED Data
+📄 MIT
+Context
+The closure of the Strait of Hormuz in March 2026 triggered the largest oil supply disruption in history, sending Brent crude from $61 to $126/bbl and whipsawing government bond yields globally. Bond markets are caught between two opposing forces:
 
-[![Excel](#)](#)
-[![Data Sources](#data-sources)](#data-sources)
-[![License](#license)](#license)
+• Inflation → pushes yields up (compensation for purchasing power erosion + rate hike expectations)
+• Recession → pushes yields down (flight to safety + rate cut expectations)
 
----
+This model helps you track which force is winning, decompose yield movements into their components, and simulate scenarios based on oil prices and conflict duration.
 
-## Overview
+Companion article: Bonds Are Screaming Two Things at Once — And Both Are Terrifying
 
-The closure of the Strait of Hormuz in March 2026 triggered the largest oil supply disruption in history, sending Brent crude from **$61 to $126 per barrel** and whipsawing government bond yields globally.
+Workbook Structure
+The model has 5 sheets, each serving a distinct purpose:
 
-Bond markets are being pulled by two opposing forces:
+📋 Sheet 1: Data Pull
+Reference sheet with FRED series codes, direct CSV download URLs, and setup instructions for auto-refreshing data.
 
-- **Inflation** → pushes yields higher through purchasing power compensation and rate hike expectations
-- **Recession** → pushes yields lower through flight-to-safety demand and rate cut expectations
+Series	FRED Code	Frequency
+US 10Y Treasury Yield	DGS10	Daily
+US 2Y Treasury Yield	DGS2	Daily
+10Y–2Y Yield Spread	T10Y2Y	Daily
+10Y Breakeven Inflation	T10YIE	Daily
+10Y TIPS Real Yield	DFII10	Daily
+Fed Funds Rate	DFF	Daily
+Brent Crude Oil	DCOILBRENTEU	Daily
+WTI Crude Oil	DCOILWTICO	Daily
+US CPI (All Urban)	CPIAUCSL	Monthly
+US PCE Price Index	PCEPI	Monthly
+US Real GDP Growth	A191RL1Q225SBEA	Quarterly
+UK 10Y Gilt Yield	IRLTLT01GBM156N	Monthly
+Germany 10Y Bund	IRLTLT01DEM156N	Monthly
+US Import Price Index	IR	Monthly
+How to refresh:
 
-This model helps you:
+FRED Excel Add-In (recommended): Download here → FRED tab → Build Dataset → Refresh
+Power Query: Data → Get Data → From Web → paste CSV URL
+Direct CSV: Each URL returns a .csv you can import manually
+📊 Sheet 2: Dashboard
+At-a-glance snapshot comparing current market levels to pre-war (Feb 27) baselines. Tracks US/UK/German/Japan 10Y yields, Brent crude, yield spread, breakeven inflation, and Fed Funds Rate. Auto-calculates change and directional signal.
 
-- track which force is currently dominating
-- decompose yield movements into their underlying drivers
-- simulate scenarios based on oil prices, disruption severity, and conflict duration
+Includes interpretation rules (e.g., "If Brent > $120 AND breakeven > 3% → DANGER ZONE").
 
-**Companion article:** *Bonds Are Screaming Two Things at Once — And Both Are Terrifying*  
-*(Insert Medium link here)*
+🔬 Sheet 3: Yield Decomposition
+Breaks the 10Y nominal yield into components:
 
----
+10Y Nominal = Real Yield (TIPS) + Breakeven Inflation + Term Premium
+If breakeven inflation is rising faster than the real yield → inflation fears dominate.
+Danger threshold: breakeven > 3.0%.
 
-## Workbook Structure
+🎮 Sheet 4: Scenario Simulator
+Input your assumptions in yellow cells, model projects impacts automatically.
 
-The workbook contains **5 sheets**, each designed for a specific analytical purpose.
+Input	Default	Description
+Brent Crude Price	$110/bbl	Current or projected oil price
+Conflict Duration	3 months	Remaining months of disruption
+Hormuz Flow Restoration	10%	0% = fully closed, 100% = open
+OPEC+ Spare Capacity	0.5 mb/d	Additional OPEC+ output
+SPR Release Rate	0.3 mb/d	Strategic reserve drawdown
+Baseline CPI YoY	2.4%	Pre-war inflation rate
+Baseline 10Y Yield	3.98%	Pre-war Treasury yield
+Baseline GDP Growth	2.4%	Pre-war growth projection
+Inflation-to-Yield Beta	0.65	Historical sensitivity
+Oil-to-CPI Passthrough	0.04	Each $10/bbl ≈ 0.4pp CPI
+Energy Share of CPI	7.5%	BLS CPI weight
+Outputs: Projected CPI, 10Y yield, GDP growth, net supply disruption, cumulative barrels lost, and a Stagflation Score with verdict (🔴 Severe / 🟡 Moderate / 🟢 Balanced / 🔵 Recession Risk).
 
-### 1. Data Pull
+5 pre-built scenarios included: Quick Resolution, Base Case, Prolonged Closure, Escalation, OECD Downside.
 
-**Purpose:**  
-Reference sheet containing FRED series codes, direct CSV download URLs, and setup instructions for auto-refreshing data.
+🚦 Sheet 5: Signal Monitor
+Scorecard of 6 inflation signals vs 6 recession signals → net regime verdict + positioning recommendation.
 
-**Includes 15 time series, such as:**
+Inflation Signals: Breakeven > 2.5%, Brent > $100, CPI > 2%, Import prices MoM > 0.5%, OECD revision > +1pp, Bear flattening
 
-| Series | FRED Code | Frequency |
-|---|---|---|
-| US 10Y Treasury Yield | DGS10 | Daily |
-| US 2Y Treasury Yield | DGS2 | Daily |
-| 10Y–2Y Yield Spread | T10Y2Y | Daily |
-| 10Y Breakeven Inflation | T10YIE | Daily |
-| Brent Crude Oil | DCOILBRENTEU | Daily |
-| Fed Funds Rate | DFF | Daily |
-| US CPI | CPIAUCSL | Monthly |
-| UK Gilt Yield | IRLTLT01GBM156N | Monthly |
-| Germany Bund Yield | IRLTLT01DEM156N | Monthly |
+Recession Signals: Yield curve inversion, OECD growth revision < −0.3pp, Consumer confidence below avg, Jobless claims > 250k, ISM < 50, Demand destruction visible
 
-**Refresh options:**
+Data Sources
+Source	URL	Provides
+FRED	fred.stlouisfed.org	Treasury yields, spreads, inflation, oil, GDP
+FRED Add-In	fred.stlouisfed.org/fred-addin	One-click Excel refresh
+US Treasury	treasury.gov	Daily par yield curve
+EIA	eia.gov	Petroleum market reports
+OECD	oecd.org	Growth & inflation forecasts
+CME FedWatch	cmegroup.com	Fed rate probabilities
+Combined FRED Download URL
+https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10,DGS2,T10Y2Y,T10YIE,DFII10,DFF,DCOILBRENTEU,DCOILWTICO
+With date range:
 
-- **FRED Excel Add-In** *(recommended)*: Download the add-in → open the **FRED** tab → **Build Dataset** → **Refresh**
-- **Power Query**: `Data` → `Get Data` → `From Web` → paste the CSV URL from the sheet
-- **Direct CSV import**: each URL returns a `.csv` file that can be imported manually
-
----
-
-### 2. Dashboard
-
-**Purpose:**  
-A high-level snapshot comparing current market levels against pre-war baselines from **February 27**.
-
-**Tracks:**
-
-- US, UK, German, and Japanese 10Y yields
-- Brent crude oil price
-- 10Y–2Y yield spread
-- 10Y breakeven inflation
-- Fed Funds Rate
-
-**Auto-calculated fields:**
-
-- **Change** = `Current − Pre-War`
-- **Signal** = `↑ RISING` / `↓ FALLING` / `— FLAT`
-
-**Interpretation rules included**, for example:
-
-> If Brent > $120 and breakeven inflation > 3.0%, inflation expectations may be unanchoring.
-
-**Manual action required:**  
-Update the **yellow cells** with the latest values after refreshing data.
-
----
-
-### 3. Yield Decomposition
-
-**Purpose:**  
-Breaks the 10Y nominal Treasury yield into its three core components:
-
-```text
-10Y Nominal Yield = Real Yield (TIPS) + Breakeven Inflation + Term Premium  text``` 
-
-
-
-Why it matters:**
-This sheet identifies what is actually driving the move in nominal yields.
-
-If breakeven inflation rises faster than the real yield, inflation fears are dominating
-If the real yield rises while breakeven inflation is stable, the move is more likely a growth or term-premium story
-
-Danger threshold:
-
-Breakeven inflation > 3.0% → inflation expectations may be unanchoring
-4. Scenario Simulator
-
-Purpose:
-Lets you input assumptions and estimate the resulting effects on inflation, bond yields, and growth.
-
-User-editable inputs (11 parameters):
+https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10,DGS2,T10Y2Y&cosd=2025-01-01&coed=2026-12-31
+Quick Start
+Open bond_market_model.xlsx
+Go to Data Pull sheet → follow instructions to set up auto-refresh
+Update yellow cells in Dashboard with latest values
+Check Signal Monitor for current regime verdict
+Use Scenario Simulator to test what-if scenarios
+Color Coding
+Blue text
+— Input cells: hardcoded values you update
+Black text
+— Formulas: auto-calculated, don't edit
+Yellow background
+— Editable assumptions: change for scenarios
+Key Formulas
+Output	Logic
+CPI Impact	Oil_Price_Change × Oil_to_CPI_Passthrough
+Projected CPI	Baseline_CPI + CPI_Impact
+Yield Change	CPI_Impact × Inflation_to_Yield_Beta
+GDP Drag	MAX(0, (Oil_Price − 80) × 0.005)
+Net Supply Disruption	10 × (1 − Hormuz_Flow%) − OPEC − SPR
+Stagflation Score	Inflation_Impact − GDP_Drag
+Limitations
+⚠️ Not financial advice. This is an analytical framework, not a trading signal. Betas are historical estimates and will vary by regime. CME FedWatch and OECD forecasts require manual refresh. UK/German yields are monthly on FRED; use Bloomberg for daily. No VBA/macros — standard Excel formulas, works everywhere.
+Related
+📝 Medium Article: Bonds Are Screaming Two Things at Once — And Both Are Terrifying
+📊 Charts: 6 original figures (bond yields, oil prices, OECD revisions, tug-of-war diagram, Fed expectations, growth forecasts)
+🌐 OECD Interim Outlook (Mar 2026): oecd.org
+📈 FRED 10Y Yield: fred.stlouisfed.org/series/DGS10
