@@ -93,3 +93,21 @@ Breaks the 10Y nominal Treasury yield into its three core components:
 
 ```text
 10Y Nominal Yield = Real Yield (TIPS) + Breakeven Inflation + Term Premium
+
+
+
+**Why it matters:**
+This sheet identifies what is actually driving the move in nominal yields.
+
+If breakeven inflation rises faster than the real yield, inflation fears are dominating
+If the real yield rises while breakeven inflation is stable, the move is more likely a growth or term-premium story
+
+Danger threshold:
+
+Breakeven inflation > 3.0% → inflation expectations may be unanchoring
+4. Scenario Simulator
+
+Purpose:
+Lets you input assumptions and estimate the resulting effects on inflation, bond yields, and growth.
+
+User-editable inputs (11 parameters):
