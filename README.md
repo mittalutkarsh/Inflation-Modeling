@@ -6,6 +6,8 @@
 ![Excel](https://img.shields.io/badge/Format-.xlsx-217346?logo=microsoftexcel&logoColor=white) ![Data](https://img.shields.io/badge/Data_Source-FRED-003DA5) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
+## Article
+https://medium.com/p/b4b3b9199202/edit
 
 ## Context
 
